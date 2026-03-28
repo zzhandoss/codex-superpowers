@@ -24,6 +24,7 @@ When multiple screens are involved, this skill must also preserve a stable cross
 Do not jump from approved design and engineering design directly into `writing-plans` if important UI/UX decisions are still implicit.
 
 The output of this skill must reduce ambiguity for planning without turning into a task plan.
+This skill is approval-driven. Do not silently invent flows, screens, tool-path choices, or design direction and then drop a finished artifact without explicit user confirmation.
 
 <HARD-GATE>
 Do NOT invoke `writing-plans`, write an implementation plan, break work into executable tasks, or take implementation action until you have produced a UI/UX design artifact that is sufficient input for later planning.
@@ -37,18 +38,24 @@ You MUST complete these stages in order:
 1. **Inspect approved inputs** - read the approved design input, engineering design doc, and relevant workspace context
 2. **Determine the mode** - choose `initial` when creating the first approved UI/UX artifact, or `revision` when updating an existing approved artifact
 3. **Decide whether UI/UX work is needed** - if the work is backend-only or has no meaningful UI/UX impact, do not force this skill; hand off forward without inventing a UI/UX artifact
-4. **Prepare a structured UI/UX spec** - clarify flows, screens, states, continuity rules, and visual goals before generation-heavy tool use
-5. **Choose the tool path** - use Stitch Kit Integration if explicitly chosen, Visual Companion if visuals will help, or a text-first fallback if needed
-6. **Define flows, screens, and states** - make user journeys, screen inventory, navigation, and state coverage explicit
-7. **Define the shared shell and continuity contract** - lock shared navigation, recurring sections, stable labels, design-system rules, and screen-to-screen consistency before generating additional screens
-8. **Translate engineering boundaries into UI structure** - make explicit what the later implementation must preserve about shared components, screen ownership, design-system continuity, and UI boundary rules
-9. **If revising, classify the change and check impact** - determine whether the revision is cosmetic, structural, or flow/scope-changing, then check what planning or implementation it affects
-10. **Produce visual or structured artifacts** - mockups, wireframes, diagrams, or structured textual equivalents
-11. **Run continuity review after generated output** - check shell, menu, recurring blocks, shared terminology, visual tokens, and state treatment before accepting a screen
-12. **Iterate if needed** - use an explicit loop such as generate, edit, variants, and design-system application until the result is planning-ready
-13. **Write or update the UI/UX design artifact** - save it to the default path unless the user prefers a different location
-14. **UI/UX self-review** - check the artifact against the approved design and engineering design docs and fix drift inline
-15. **Hand off cleanly** - stop at a planning input and hand off to later workflow stages without taking them over
+4. **Show the UI/UX need and scope packet** - present the UI/UX questions, intended screen/flow scope, and why this stage is or is not needed
+5. **Get approval to continue this stage** - do not silently bypass or silently force UI/UX work when the scope is ambiguous
+6. **Prepare a structured UI/UX spec** - clarify flows, screens, states, continuity rules, and visual goals before generation-heavy tool use
+7. **Choose the tool path explicitly** - use Stitch Kit Integration if explicitly chosen, Visual Companion if explicitly chosen or clearly preferred, or a text-first fallback if that is what the user wants
+8. **Show the proposed UI/UX direction** - surface the draft flows, screen set, state coverage, continuity rules, and chosen tool path before generating or locking the artifact
+9. **Get approval on the UI/UX direction and tool path** - do not silently self-approve flows, screens, or tooling
+10. **Define flows, screens, and states** - make user journeys, screen inventory, navigation, and state coverage explicit
+11. **Define the shared shell and continuity contract** - lock shared navigation, recurring sections, stable labels, design-system rules, and screen-to-screen consistency before generating additional screens
+12. **Translate engineering boundaries into UI structure** - make explicit what the later implementation must preserve about shared components, screen ownership, design-system continuity, and UI boundary rules
+13. **If revising, classify the change and check impact** - determine whether the revision is cosmetic, structural, or flow/scope-changing, then check what planning or implementation it affects
+14. **Produce visual or structured artifacts** - mockups, wireframes, diagrams, or structured textual equivalents
+15. **Run continuity review after generated output** - check shell, menu, recurring blocks, shared terminology, visual tokens, and state treatment before accepting a screen
+16. **Iterate if needed** - use an explicit loop such as generate, edit, variants, and design-system application until the result is planning-ready
+17. **Write or update the UI/UX design artifact** - save it to the default path unless the user prefers a different location
+18. **UI/UX self-review** - check the artifact against the approved design and engineering design docs and fix drift inline
+19. **Hand off cleanly** - stop at a planning input and hand off to later workflow stages without taking them over
+
+When several UI/UX choices naturally belong together, batch them and ask for approval as one packet instead of forcing trivial micro-approvals.
 
 ## Inputs
 
@@ -121,6 +128,7 @@ Pick the tool path that best fits the current question:
 
 Tool paths are pluggable backends. The skill must still produce a useful UI/UX artifact even without Stitch or any browser-based helper.
 If a preferred tool path is unavailable, fall back honestly and record that fallback in the artifact instead of pretending generation occurred.
+Do not silently choose a generation-heavy path when the user has not approved it. If more than one path is plausible, present the options and get confirmation.
 
 Operationally:
 - **Stitch Kit Integration** means using Stitch project/screen workflows to generate or iterate on planning-grade UI artifacts
@@ -174,6 +182,27 @@ At minimum, make these explicit when relevant:
 - what is allowed to vary screen-to-screen versus what must remain fixed
 
 Do not leave this implicit inside screenshots. Write it down in the artifact.
+
+## Approval-Driven Behavior
+
+Before writing or substantially rewriting the UI/UX artifact:
+- show the user the current UI/UX scope packet or proposed direction packet;
+- make it clear which parts are:
+  - proposed and ready to approve
+  - still exploratory
+  - provisional
+  - formally deferred into placeholders;
+- make the selected tool path explicit instead of burying it in the final artifact;
+- wait for explicit user approval of the current step or related batch of steps.
+
+Good approval checkpoints include:
+- whether this stage is needed at all
+- the tool path choice
+- the proposed flow and screen set
+- the shared shell and continuity contract
+- the acceptance or rejection of generated visual direction
+
+Do not treat your own preference, implicit momentum, or a generated screen existing as approval.
 
 ## Accepted Screen Baseline
 

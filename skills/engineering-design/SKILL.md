@@ -29,6 +29,7 @@ Use this skill to decide and document:
 Do not jump directly from design doc to execution planning if key engineering decisions are still implicit.
 
 The output of this skill must reduce ambiguity for planning without turning into a task plan.
+This skill is approval-driven. Do not silently decide the full engineering shape and drop a finished document without explicit user confirmation of the important steps.
 
 <HARD-GATE>
 Do NOT invoke `writing-plans`, write an implementation plan, break work into executable tasks, or take implementation action until you have produced an engineering design artifact that is sufficient input for later planning.
@@ -40,11 +41,18 @@ You MUST complete these stages in order:
 
 1. **Inspect design input and workspace reality** - read the design doc, inspect repo structure, config, adjacent docs, and local conventions
 2. **Identify engineering gaps** - list the engineering decisions that are still implicit, missing, conflicting, or risky
-3. **Resolve what can be resolved now** - choose technologies, boundaries, delivery assumptions, observability expectations, and testing policy where enough context exists
-4. **Formalize deferred decisions** - create or reference placeholders for unresolved questions instead of writing vague `TBD` text
-5. **Write the engineering design artifact** - save it to the default path unless the user prefers a different location
-6. **Engineering design self-review** - check the engineering document against the approved design doc and fix drift inline
-7. **Hand off cleanly** - stop at an engineering contract and hand off to later workflow stages without taking them over
+3. **Show the engineering gap packet** - present the open engineering questions, likely decision groups, and any important unknowns before finalizing them
+4. **Get approval to proceed on those groups** - let the user approve step-by-step or as a related batch before locking decisions into the artifact
+5. **Resolve what can be resolved now** - choose technologies, boundaries, delivery assumptions, observability expectations, and testing policy where enough context exists
+6. **Show the proposed engineering decisions** - surface the proposed choices, rationale, and provisional/deferred areas before writing the final document
+7. **Get approval on the proposed decisions** - do not silently self-approve the final engineering shape
+8. **Formalize deferred decisions** - create or reference placeholders for unresolved questions instead of writing vague `TBD` text
+9. **Write the engineering design artifact** - save it to the default path unless the user prefers a different location
+10. **Engineering design self-review** - check the engineering document against the approved design doc and fix drift inline
+11. **Hand off cleanly** - stop at an engineering contract and hand off to later workflow stages without taking them over
+
+When several decisions naturally belong together, batch them and ask for approval as one packet instead of interrupting every sentence.
+Do not force needless micro-approvals, but do not skip explicit user approval for the main engineering decisions either.
 
 ## Inputs
 
@@ -108,6 +116,25 @@ Good examples include:
 - domain or service boundaries that later planning must preserve
 
 Do not fill the document with generic pattern advice detached from the actual work.
+
+## Approval-Driven Behavior
+
+Before writing or substantially rewriting the engineering design artifact:
+- show the user the current engineering gap packet or proposed decision packet;
+- make it clear which decisions are:
+  - ready to lock
+  - still provisional
+  - better deferred into placeholders;
+- wait for explicit user approval of the current step or related batch of steps.
+
+Good approval checkpoints include:
+- the grouped engineering gaps that still need choices
+- the proposed stack and major technical direction
+- the architectural structure and boundary rules
+- the deferred-decision set and placeholder plan
+
+Do not treat silence, your own preference, or momentum as approval.
+Do not write the final document as if those decisions were already approved when they were not.
 
 ## Deferred Decisions
 
@@ -179,6 +206,9 @@ You are drifting out of this skill if you start:
 After the engineering design doc is complete:
 - hand off to `ui-ux-design` if the work needs explicit UI/UX flow, screen, or mockup design;
 - hand off to `writing-plans` when planning-ready engineering inputs are in place.
+
+For user-facing work, do not treat `ui-ux-design` as optional just because engineering decisions are already documented.
+If flows, screens, states, shell rules, or visual/tooling direction are still implicit, hand off to `ui-ux-design` before `writing-plans`.
 
 Mention downstream stages only as handoff targets. Do not implicitly orchestrate them from inside this skill.
 Stop when the engineering design artifact is sufficient input for later planning.
